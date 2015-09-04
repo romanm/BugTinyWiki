@@ -1,0 +1,46 @@
+<html>
+<body>
+	<h1>Стартова веб аплікація</h1>
+	<ol>
+		<li>Використовує встроений Apache Tomcat — контейнер сервлетів,
+			розроблений Apache Software Foundation.</li>
+		<li>Базується на Spring Framework Getting Started Securing a Web
+			Application</li>
+	</ol>
+	<h2>Перший крок</h2>
+	<p>Доведеня прикладу "Spring Framework Getting Started Securing a
+		Web Application" до стану даної сторінки.</p>
+	<ol>
+		<li>Взяти приклад з: http://spring.io/guides/gs/securing-web/
+			<p>
+				<samp>Потрібно тільки src директорія з complete директорії і
+					build.gradle файл.</samp>
+			</p>
+		</li>
+		<li>Додати html сторінку src/main/webapp/page1/step1.html</li>
+		<li>Зняти захист: "/page1/**" в WebSecurityConfig.java</li>
+		<li>Зробити redirect на бажану сторінку.
+			<ol>
+				<li>Зарееструвати template redirect.html в MvcConfig.java</li>
+				<li>Налаштувати в redirect.html client-side redirect
+					<p>
+						<samp> за прикладом
+							http://www.w3.org/TR/WCAG20-TECHS/H76.html </samp>
+					</p>
+				</li>
+			</ol>
+		</li>
+		<li>Компіляція: <code> gradle clean build</code></li>
+		<li>Запуск: <code> java -jar
+				build/libs/bug-cms-1-0.1.0.jar</code></li>
+		<li>Альтернативний компіляція і запуск, за допомогою Spring Tool
+			Suite™</li>
+		<li>https://github.com/romanm/bugCms1_step1</li>
+	</ol>
+	<hr />
+	<p>
+		<a href="/home"> Spring Framework Getting Started Securing a Web
+			Application home page</a>
+	</p>
+</body>
+</html>

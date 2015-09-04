@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+<head>
+<title>Використовувати textAngular</title>
+<script type="text/javascript" src="/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-rangy.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Редагування сторінки: 
+		{{pageObject.title}}
+		</h1>
+		<div>
+			<button ng-click="saveJsonToFile()">запис</button>
+			| <a href="/bugtw/view.html?{{pageKey}}">Перегляд</a>
+			| <a href="/bugtwed/siteMapEditor.html">SiteMap</a>
+		</div>
+		<div>
+			Заголовок: <input ng-model="pageObject.title">
+		</div>
+		<div text-angular ng-model="pageObject.html" name="demo-editor"
+			ta-text-editor-class="border-around container"
+			ta-html-editor-class="border-around"></div>
+	</div>
+	<script type="text/javascript">
+		angular.module("myApp", ['textAngular']).controller("myCtrl",
+		function demoController($scope, $http) {
+
+		$scope.saveJsonToFile = function(){
+			$http.post('/saveBugTinyWiki', $scope.jsonFromRam).
+			then(function(response) {
+				console.log("---------success--------")
+			}, function(response) {
+				console.log("----------erros-------")
+			});
+		}
+
+		$scope.pageKey = window.location.search.substring(1);
+
+		$http.get("http://localhost:8080/page1/readBugTinyWiki")
+		.success(function(response) {
+			$scope.jsonFromRam = response;
+			console.log($scope.jsonFromRam);
+			$scope.pageObject = response[$scope.pageKey];
+			console.log($scope.pageObject);
+		});
+
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "title" : "BugTinyWiki development",
+  "page1" : {
+    "title" : "Стартова сторінка (index)",
+    "html" : "<p>te<b>st</b> <i>html</i>. Hello. <br/></p><p>Міняем текст.<br/></p>"
+  },
+  "int" : 369,
+  "date" : "2015-09-03T17:21:02.223Z",
+  "page11" : {
+    "title" : "Інструкція",
+    "html" : "<p>page text</p><p>Нова сторінка<br/></p>"
+  }
+}
