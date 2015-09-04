@@ -1,6 +1,9 @@
 package hello;
 
 public class AppConfig {
-	final static String applicationFolderPfad	= "/home/roman/algoritmed.com/bug-cms/BugTinyWiki/";
+	//development
+//	final static String applicationFolderPfad	= "/home/roman/algoritmed.com/bug-cms/BugTinyWiki/";
+	//prodaction
+	final static String applicationFolderPfad	= "/home/holweb/server4/BugTinyWiki/";
 	final static String innerDbFolderPfad		= "src/main/webapp/";
 }

@@ -35,13 +35,14 @@
 			then(function(response) {
 				console.log("---------success--------")
 			}, function(response) {
-				console.log("----------erros-------")
+				console.log("----------erros-------");
+				console.log(response);
 			});
 		}
 
 		$scope.pageKey = window.location.search.substring(1);
 
-		$http.get("http://localhost:8080/page1/readBugTinyWiki")
+		$http.get("/page1/readBugTinyWiki")
 		.success(function(response) {
 			$scope.jsonFromRam = response;
 			console.log($scope.jsonFromRam);
