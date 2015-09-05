@@ -32,7 +32,7 @@
 						}
 					});
 				console.log(lastPage);
-				var page = "page"+(lastPage+1);
+				var page = "page" + (lastPage/1 + 1);
 				$scope.jsonFromRam[page] = {"title" : page, "html" : "page text"};
 				
 				console.log($scope.jsonFromRam);
@@ -63,7 +63,7 @@
 			$scope.objectKeys = function(object){
 				if(object)
 					return Object.keys(object);
-				else 
+				else
 					return [];
 			}
 
