@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AppRest {
 	@Autowired private AppService appService;
 	//------------BugTinyWiki------------------------------------
-	String bugTinyWikiJsonFileName = "bugtw/bugTinyWiki.json";
+	String bugTinyWikiJsonFileName = "bugTinyWiki.json";
 	@RequestMapping(value = "/saveBugTinyWiki", method = RequestMethod.POST)
 	public  @ResponseBody Map<String, Object> saveBugTinyWiki(@RequestBody Map<String, Object> bugTinyWikiJavaObject) {
 		System.out.println(24);
