@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="/js/lib/angular.min.js"></script>
+</head>
+<body>
+	<h1>Запис JSON в файл.</h1>
+	<ol>
+		<li>Зчитати json як в <code>
+				<a href="read_json_from_ram.html">read_json_from_ram.html</a>
+			</code></li>
+		<li>Додати <code>.csrf().disable()</code>, що необхідно для
+			роботи <code>POST</code> запиту. <pre>
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+		<b>.csrf().disable()</b>
+		...
+	}
+	...
+}</pre>
+		</li>
+		<li> Організовуем прийняття <code>json</code> через <code>POST</code> запит і конвертацію його в 
+		java object
+		<code> Map<String, Object></code> формат.
+		<pre>
+package hello;
+@Controller
+public class AppRest {
+	@Autowired private AppService appService;
+	@RequestMapping(value = "/page1/json/save_json_to_file", method = RequestMethod.POST)
+	public  @ResponseBody Map<String, Object> saveJsonToFile(@RequestBody Map<String, Object> jsonToJavaObject) {
+		appService.saveJsonToFile(jsonToJavaObject,"javaObjectToJson.json");
+		return jsonToJavaObject;
+	}
+...
+}</pre>
+		</li>
+		<li>Записуєм java object як текстовий json файл.<pre> 
+package hello;
+@Component("appService")
+public class AppService {
+	public void saveJsonToFile(Map<String, Object> javaObjectToJson, String fileName) {
+		File file = new File(AppConfig.applicationFolderPfad + AppConfig.innerDbFolderPfad + fileName);
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectWriter writerWithDefaultPrettyPrinter = mapper.writerWithDefaultPrettyPrinter();
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			writerWithDefaultPrettyPrinter.writeValue(fileOutputStream, javaObjectToJson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}</pre>
+		</li>
+		<li>
+		Зчитування json з файла дивіться в коді програми.
+		</li>
+	</ol>
+	<h2>Тестування</h2>
+	<ol ng-app="mySaveApp" ng-controller="mySaveCtrl">
+		<li>
+		Зчитуем json з сервера.
+			<div >
+				<div>text = {{jsonFromRam.text}}</div>
+				<div>int = {{jsonFromRam.int}}</div>
+				<div>date = {{jsonFromRam.date | date}}</div>
+				<div>intList = {{jsonFromRam.intList}}</div>
+			</div>
+			
+		</li>
+		<li>
+		<button ng-click="saveJsonToFile()">saveJsonToFile</button>
+		</li>
+		<li>
+		<button ng-click="readJsonFromFile()">readJsonFromFile</button>
+		</li>
+	</ol>
+	<script type="text/javascript">
+	angular.module("mySaveApp", []).controller("mySaveCtrl",
+		function demoController($scope, $http) {
+		
+		readJsonFromUrl = function(url){
+			$http.get(url)
+			.success(function(response) {
+				$scope.jsonFromRam = response;
+				$scope.jsonFromRam.int += 123;
+				var d = new Date($scope.jsonFromRam.date) ;
+				d.setDate(d.getDate() + 1);
+				$scope.jsonFromRam.date = d;
+				$scope.jsonFromRam.intList.push(4);
+				console.log($scope.jsonFromRam);
+			});
+		}
+		readJsonFromUrl("/page1/readJsonFromRam");
+
+		$scope.readJsonFromFile = function(){
+			readJsonFromUrl("/page1/readJsonFromFile");
+		}
+
+		$scope.saveJsonToFile = function(){
+			$http.post('/page1/json/save_json_to_file', $scope.jsonFromRam).
+			then(function(response) {
+				console.log("---------success--------")
+			}, function(response) {
+				console.log("----------erros-------")
+			});
+		}
+
+	});
+	</script>
+	<div>
+		<hr />
+		<a href="/">[home]</a>
+	</div>
+</body>
+</html>

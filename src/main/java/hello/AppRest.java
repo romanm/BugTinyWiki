@@ -33,6 +33,7 @@ public class AppRest {
 	}
 	//------------BugTinyWiki------------------------------------END
 
+	//--------------componenten------------------------------
 	@RequestMapping(value = "/page1/readJsonFromRam", method = RequestMethod.GET)
 	public  @ResponseBody Map<String, Object> readJsonFromRam() {
 		Map<String, Object> map = new HashMap<>();
@@ -42,6 +43,16 @@ public class AppRest {
 		List<Integer> intList = new ArrayList<Integer>(Arrays.asList(new Integer[]{1,2,3}));
 		map.put("intList", intList);
 		return map;
+	}
+	String firstJsonFileName = "javaObjectToJson.json";
+	@RequestMapping(value = "/page1/json/save_json_to_file", method = RequestMethod.POST)
+	public  @ResponseBody Map<String, Object> saveJsonToFile(@RequestBody Map<String, Object> jsonToJavaObject) {
+		appService.saveJsonToFile(jsonToJavaObject,firstJsonFileName);
+		return jsonToJavaObject;
+	}
+	@RequestMapping(value = "/page1/readJsonFromFile", method = RequestMethod.GET)
+	public  @ResponseBody Map<String, Object> readJsonFromFile() {
+		return appService.readJsonFromFile(firstJsonFileName);
 	}
 
 }
