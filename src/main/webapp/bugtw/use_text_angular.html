@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Використовувати textAngular</title>
+<script type="text/javascript" src="/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-rangy.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Використовувати textAngular</h1>
+		Все в html.
+		<div id="ng-app" ng-app="textAngularDemo"
+			ng-controller="demoController" class="ng-scope">
+
+			<div text-angular ng-model="htmlContent" name="demo-editor"
+				ta-text-editor-class="border-around container"
+				ta-html-editor-class="border-around"></div>
+
+			<hr />
+			<p ng-bind="htmlContent"></p>
+			<hr />
+			<p ng-bind-html="htmlContent" class="text-left text-med text-gray"></p>
+		</div>
+
+	</div>
+	<div>
+		<hr />
+		<a href="/">[home]</a>
+	</div>
+	<script type="text/javascript">
+		angular
+				.module("textAngularDemo", [ 'textAngular' ])
+				.controller(
+						"demoController",
+						function demoController($scope) {
+							$scope.htmlContent = '<h2>Try me!</h2><p>textAngular is a super cool WYSIWYG Text Editor directive for AngularJS</p><p><b>Features:</b></p><ol><li>Automatic Seamless Two-Way-Binding</li><li style="color: blue;">Super Easy <b>Theming</b> Options</li><li>Simple Editor Instance Creation</li><li>Safely Parses Html for Custom Toolbar Icons</li><li>Doesn&apos;t Use an iFrame</li><li>Works with Firefox, Chrome, and IE9+</li></ol><p><b>Code at GitHub:</b> <a href="https://github.com/fraywing/textAngular">Here</a> </p>';
+						});
+	</script>
+</body>
+</html>
