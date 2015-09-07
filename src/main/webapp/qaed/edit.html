@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+<head>
+<title>Використовувати textAngular</title>
+<script type="text/javascript" src="/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-rangy.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Редагування сторінки: питання / відповіді</h1>
+		<div>
+		<a href="/qa/random.html">Вибрати для екзамену {{qaJson.qForTest}} питань. випадково. </a>
+		</div>
+		Всього в БД {{qaJson.qaList.length}} питань. <a
+			ng-click="setQaEditIndex(-2)"> Для екзамену використовувати
+			{{qaJson.qForTest}} з {{qaJson.qaList.length}} </a> 
+		<span
+			ng-if="qaEditIndex == -2"> <input ng-model="qaJson.qForTest"
+			type="number" />
+			<button ng-click="saveJsonToFile()">запис</button>
+		</span>
+
+		<div data-ng-repeat="qa in qaJson.qaList">
+			<a ng-click="setQaEditIndex($index)"> Nr {{$index + 1}} </a>
+			<div ng-if="qaEditIndex != $index" ng-bind-html="qa.html"></div>
+			<div ng-if="qaEditIndex == $index">
+				<button ng-click="saveJsonToFile()">запис</button>
+			</div>
+			<div ng-if="qaEditIndex == $index" text-angular ng-model="qa.html"></div>
+		</div>
+		<div>
+			<a ng-click="addQuery()"> Додати питання </a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		angular.module("myApp", ['textAngular']).controller("myCtrl",
+		function demoController($scope, $http) {
+		
+		$scope.addQuery = function(){
+			$scope.qaJson.qaList.push({html:"Нове питання"});
+		}
+		$scope.qaEditIndex = -1;
+		$scope.setQaEditIndex = function(index){
+			if($scope.qaEditIndex == index){
+				$scope.qaEditIndex = -1;
+			}else{
+				$scope.qaEditIndex = index;
+			}
+		}
+
+		$http.get("/qa/read")
+		.success(function(response) {
+			$scope.qaJson = response;
+			console.log($scope.qaJson);
+		});
+
+		$scope.saveJsonToFile = function(){
+			$http.post("/saveQa", $scope.qaJson).
+			then(function(response) {
+				console.log("---------success--------")
+			}, function(response) {
+				console.log("----------erros-------");
+				console.log(response);
+			});
+		}
+
+		});
+	</script>
+</body>
+</html>

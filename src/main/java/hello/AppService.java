@@ -18,10 +18,13 @@ public class AppService {
 	ObjectMapper mapper = new ObjectMapper();
 	public void saveJsonToFile(Map<String, Object> javaObjectToJson, String fileName) {
 		File file = new File(AppConfig.applicationDbFolderPfad + fileName);
+		System.out.println(file);
 		ObjectWriter writerWithDefaultPrettyPrinter = mapper.writerWithDefaultPrettyPrinter();
+		System.out.println(23);
 		try {
+			System.out.println(25);
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
-			System.out.println(24);
+			System.out.println(27);
 			System.out.println(fileOutputStream);
 			writerWithDefaultPrettyPrinter.writeValue(fileOutputStream, javaObjectToJson);
 		} catch (IOException e) {
@@ -31,7 +34,7 @@ public class AppService {
 
 	public Map<String, Object> readJsonFromFile(String fileName) {
 		File file = new File(AppConfig.applicationDbFolderPfad + fileName);
-		System.out.println(32);
+		System.out.println(37);
 		System.out.println(file);
 		Map<String, Object> readJsonFileToJavaObject = null;
 		try {

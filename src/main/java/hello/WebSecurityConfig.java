@@ -20,6 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 		, "/js/**"
         				, "/css/**"
         				, "/bugtw/**"
+        				, "/qa/**"
                 		).permitAll()
                 .anyRequest().authenticated()
                 .and()
