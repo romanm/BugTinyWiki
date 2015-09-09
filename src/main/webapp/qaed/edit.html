@@ -2,12 +2,16 @@
 <html ng-app="myApp" ng-controller="myCtrl">
 <head>
 <title>Використовувати textAngular</title>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+
+<script type="text/javascript" src="/js/lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="/js/lib/angular.min.js"></script>
 <script type="text/javascript" src="/js/lib/textAngular-rangy.min.js"></script>
 <script type="text/javascript" src="/js/lib/textAngular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/lib/textAngular.min.js"></script>
-<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="/css/lib/font-awesome.min.css">
 </head>
 <body>
 	<div class="container">
@@ -30,12 +34,53 @@
 		</span>
 
 		<div data-ng-repeat="qa in qaJson.qaList">
+		<!-- 
 			<a ng-click="setQaEditIndex($index)"> Nr {{$index + 1}} </a>
 			<div ng-if="qaEditIndex != $index" ng-bind-html="qa.html"></div>
+		 -->
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+			 ng-click="setQaEditIndex($index)"
+			data-target="#ed_{{$index}}"> Nr {{$index + 1}} </button>
+
+			<div ng-bind-html="qa.html"></div>
+
+			<div ng-if="qaEditIndex == $index">
+			<div class="modal fade" id="ed_{{$index}}" role="dialog">
+				<div class="modal-dialog">
+	
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Редактор питання і відповідей</h4>
+						</div>
+						<div class="modal-body">
+	
+							<div text-angular ng-model="qa.html" name="demo-editor"
+							ta-toolbar="[['ol'],['bold','italics','underline'],['undo','redo']]"
+								ta-text-editor-class="border-around container"
+								ta-html-editor-class="border-around"></div>
+	
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-info btn-default"
+								ng-click="saveJsonToFile()" data-dismiss="modal">Запис</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Закрити</button>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+
+			</div>
+<!-- 
 			<div ng-if="qaEditIndex == $index">
 				<button ng-click="saveJsonToFile()">запис</button>
 			</div>
+
 			<div ng-if="qaEditIndex == $index" text-angular ng-model="qa.html"></div>
+ -->			
 		</div>
 		<div>
 			<a ng-click="addQuery()"> Додати питання </a>
