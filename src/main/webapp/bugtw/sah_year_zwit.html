@@ -12,19 +12,24 @@
 	<div class="container">
 		<h1 ng-bind-html="data.title">Р і ч ний звіт Анестезіологів
 			Хмельниччини</h1>
-		{{data}}
-		{{data.regions}}
-		<table>
+		<table border="1">
+			<tr ng-if="data.preParam">
+				<th ng-repeat="preParamKey in objectKeys(data.preParam)"
+				colspan="{{data.preParam[preParamKey].colspan}}"
+				>
+					{{data.preParam[preParamKey].title}}</th>
+			</tr>
 			<tr>
+				<th>Nr</th>
 				<th>Район</th>
 				<th ng-repeat="paramKey in objectKeys(data.parameters)">
 					{{data.parameters[paramKey]}}</th>
 			</tr>
 			<tr ng-repeat="regionKey in objectKeys(data.regions)">
+				<td>{{$index + 1}}.</td>
 				<td>{{data.regions[regionKey]}}</td>
 				<td ng-repeat="paramKey in objectKeys(data.parameters)">
-				{{data.zwit[regionKey][paramKey]}}
-				</td>
+					{{data.zwit[regionKey][paramKey]}}</td>
 			</tr>
 		</table>
 	</div>
