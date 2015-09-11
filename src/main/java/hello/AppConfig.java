@@ -7,4 +7,7 @@ public class AppConfig {
 	//prodaction
 //	final static String applicationFolderPfad	= "/home/holweb/server4/BugTinyWiki/";
 //	final static String applicationDbFolderPfad	= "/home/holweb/server4/db/";
+	//----------------files-------------------------------------------------------
+	final static String sahUsersJsonFileName = "sah_users.json";
+	final static String sahYearZwitJsonFileName = "sah_year_zwit.json";
 }

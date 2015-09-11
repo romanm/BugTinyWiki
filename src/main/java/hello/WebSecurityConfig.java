@@ -32,10 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
-    }
+    @Autowired private AuthFromJsonFile authFromJsonFile;
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication()
+			.withUser("user").password("password").roles("USER");
+		authFromJsonFile.addAuthentication(AppConfig.sahUsersJsonFileName,auth);
+	}
 }

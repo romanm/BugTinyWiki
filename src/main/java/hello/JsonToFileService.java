@@ -12,8 +12,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-@Component("appService")
-public class AppService {
+@Component("jsonToFileService")
+public class JsonToFileService {
 
 	ObjectMapper mapper = new ObjectMapper();
 	public void saveJsonToFile(Map<String, Object> javaObjectToJson, String fileName) {
@@ -48,6 +48,5 @@ public class AppService {
 		}
 		return readJsonFileToJavaObject;
 	}
-
 
 }

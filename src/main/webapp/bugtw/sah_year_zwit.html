@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+<head>
+<title>BugTinyWiki view</title>
+<script type="text/javascript" src="/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-rangy.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular-sanitize.min.js"></script>
+<script type="text/javascript" src="/js/lib/textAngular.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1 ng-bind-html="data.title">Р і ч ний звіт Анестезіологів
+			Хмельниччини</h1>
+		{{data}}
+		{{data.regions}}
+		<table>
+			<tr>
+				<th>Район</th>
+				<th ng-repeat="paramKey in objectKeys(data.parameters)">
+					{{data.parameters[paramKey]}}</th>
+			</tr>
+			<tr ng-repeat="regionKey in objectKeys(data.regions)">
+				<td>{{data.regions[regionKey]}}</td>
+				<td ng-repeat="paramKey in objectKeys(data.parameters)">
+				{{data.zwit[regionKey][paramKey]}}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript">
+		angular.module("myApp", ['textAngular']).controller("myCtrl",
+		function demoController($scope, $http) {
+
+			$http.get("/page1/readSahYearZwit")
+			.success(function(data) {
+				$scope.data = data;
+				console.log($scope.data);
+			});
+
+			$scope.objectKeys = function(object){
+				if(object)
+					return Object.keys(object);
+				else
+					return [];
+			}
+
+		});
+	</script>
+</body>
+</html>

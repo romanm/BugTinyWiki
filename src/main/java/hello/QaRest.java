@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class QaRest {
-	@Autowired private AppService appService;
+	@Autowired private JsonToFileService jsonToFileService;
 	String qaJsonFileName = "qa.json";
 	@RequestMapping(value = "/saveQa", method = RequestMethod.POST)
 	public  @ResponseBody Map<String, Object> saveQa(@RequestBody Map<String, Object> qaJsonJavaObject) {
 		System.out.println(18);
 		System.out.println(qaJsonFileName);
-		appService.saveJsonToFile(qaJsonJavaObject,qaJsonFileName);
+		jsonToFileService.saveJsonToFile(qaJsonJavaObject,qaJsonFileName);
 		return qaJsonJavaObject;
 	}
 	@RequestMapping(value = "/qa/read", method = RequestMethod.GET)
 	public  @ResponseBody Map<String, Object> readBugTinyWiki() {
-		Map<String, Object> readJsonFromFile = appService.readJsonFromFile(qaJsonFileName);
+		Map<String, Object> readJsonFromFile = jsonToFileService.readJsonFromFile(qaJsonFileName);
 		return readJsonFromFile;
 	}
 	@RequestMapping(value = "/qa/randomQa", method = RequestMethod.POST)
