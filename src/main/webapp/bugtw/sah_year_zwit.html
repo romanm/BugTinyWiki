@@ -12,6 +12,7 @@
 	<div class="container">
 		<h1 ng-bind-html="data.title">Р і ч ний звіт Анестезіологів
 			Хмельниччини</h1>
+			{{role}}
 		<table border="1">
 			<tr ng-if="data.preParam">
 				<th ng-repeat="preParamKey in objectKeys(data.preParam)"
@@ -27,7 +28,10 @@
 			</tr>
 			<tr ng-repeat="regionKey in objectKeys(data.regions)">
 				<td>{{$index + 1}}.</td>
-				<td><a href="/bugtwed/sah_inhal_report.html"> {{data.regions[regionKey]}} </a></td>
+				<td><a ng-if="regionKey == role"
+					href="/bugtwed/sah_inhal_report.html">
+						{{data.regions[regionKey]}} </a> <span ng-if="regionKey != role">
+						{{data.regions[regionKey]}} </span></td>
 				<td ng-repeat="paramKey in objectKeys(data.parameters)">
 					{{data.zwit[regionKey][paramKey]}}</td>
 			</tr>
@@ -37,12 +41,16 @@
 		angular.module("myApp", ['textAngular']).controller("myCtrl",
 		function demoController($scope, $http) {
 
-			$http.get("/page1/readSahYearZwit")
-			.success(function(data) {
+			$http.get("/page1/readSahYearZwit").success(function(data) {
 				$scope.data = data;
 				console.log($scope.data);
 			});
 
+			$http.get("/read_user").success(function(data) {
+				$scope.user = data;
+				$scope.role = $scope.user.authorities[0].authority.split("_")[1];
+			});
+			
 			$scope.objectKeys = function(object){
 				if(object)
 					return Object.keys(object);

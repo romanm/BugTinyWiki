@@ -24,7 +24,7 @@ public class QaRest {
 	String qaJsonFileName = "qa.json";
 	@RequestMapping(value = "/saveQa", method = RequestMethod.POST)
 	public  @ResponseBody Map<String, Object> saveQa(@RequestBody Map<String, Object> qaJsonJavaObject) {
-		System.out.println(18);
+		System.out.println(27);
 		System.out.println(qaJsonFileName);
 		jsonToFileService.saveJsonToFile(qaJsonJavaObject,qaJsonFileName);
 		return qaJsonJavaObject;

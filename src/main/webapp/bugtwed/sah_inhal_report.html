@@ -10,17 +10,43 @@
 </head>
 <body>
 	<div class="container">
-		<h1 ng-bind-html="data.title">Заповнення звіту.</h1>
-		
+		<h1>
+			<a ng-bind-html="data.title" href="/bugtw/sah_year_zwit.html"> </a>
+		</h1>
+
+		<h2>
+		Заповніть данні свого району --
+		{{data.regions[role]}}
+		</h2>
+
+		{{data.zwit[role]}}
+		<table border="1">
+			<tr ng-if="data.preParam">
+				<th ng-repeat="preParamKey in objectKeys(data.preParam)"
+					colspan="{{data.preParam[preParamKey].colspan}}">
+					{{data.preParam[preParamKey].title}}</th>
+			</tr>
+			<tr>
+				<th>Nr</th>
+				<th>Район</th>
+				<th ng-repeat="paramKey in objectKeys(data.parameters)">
+					{{data.parameters[paramKey]}}</th>
+			</tr>
+		</table>
+
 	</div>
 	<script type="text/javascript">
 		angular.module("myApp", ['textAngular']).controller("myCtrl",
 		function demoController($scope, $http) {
 
-			$http.get("/page1/readSahYearZwit")
-			.success(function(data) {
+			$http.get("/page1/readSahYearZwit").success(function(data) {
 				$scope.data = data;
 				console.log($scope.data);
+			});
+
+			$http.get("/read_user").success(function(data) {
+				$scope.user = data;
+				$scope.role = $scope.user.authorities[0].authority.split("_")[1];
 			});
 
 			$scope.objectKeys = function(object){
