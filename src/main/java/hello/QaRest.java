@@ -1,5 +1,6 @@
 package hello;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class QaRest {
 	@Autowired private JsonToFileService jsonToFileService;
+	
+	@RequestMapping(value = "/read_user", method = RequestMethod.GET)
+	public  @ResponseBody Principal getRoleTypes(Principal userPrincipal) {
+		return userPrincipal;
+	}
+	
 	String qaJsonFileName = "qa.json";
 	@RequestMapping(value = "/saveQa", method = RequestMethod.POST)
 	public  @ResponseBody Map<String, Object> saveQa(@RequestBody Map<String, Object> qaJsonJavaObject) {
