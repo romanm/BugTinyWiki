@@ -7,31 +7,36 @@
 <script type="text/javascript" src="/js/lib/textAngular-sanitize.min.js"></script>
 <script type="text/javascript" src="/js/lib/textAngular.min.js"></script>
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<style type="text/css" media="screen">
+input[type="number"] {
+	width: 60px;
+}
+</style>
 </head>
 <body>
 	<div class="container">
 		<h1>
 			<a ng-bind-html="data.title" href="/bugtw/sah_year_zwit.html"> </a>
 		</h1>
-
-		<h2>
-		Заповніть данні свого району --
-		{{data.regions[role]}}
-		</h2>
-
+		<h2>Заповніть данні свого району -- {{data.regions[role]}}</h2>
 		{{data.zwit[role]}}
-		<table border="1">
-			<tr ng-if="data.preParam">
-				<th ng-repeat="preParamKey in objectKeys(data.preParam)"
-					colspan="{{data.preParam[preParamKey].colspan}}">
-					{{data.preParam[preParamKey].title}}</th>
-			</tr>
-			<tr>
-				<th>Nr</th>
-				<th>Район</th>
-				<th ng-repeat="paramKey in objectKeys(data.parameters)">
-					{{data.parameters[paramKey]}}</th>
-			</tr>
+		<br/>
+		<button type="button" class="btn btn-info btn-default"
+			ng-click="saveJsonToFile()" data-dismiss="modal">Запис</button>
+		<table>
+			<tbody ng-repeat="paramKey in objectKeys(data.parameters)">
+				<tr ng-if="data.parameters[paramKey].preParam">
+					<th colspan="2">
+						<h3>
+							{{data.preParam[data.parameters[paramKey].preParam].title}}</h3>
+					</th>
+				</tr>
+				<tr>
+					<td>{{data.parameters[paramKey].title}}</td>
+					<td><input ng-model="data.zwit[role][paramKey]" type="number"
+						size="4" ng-change="calc(departmentHol)" /></td>
+				</tr>
+			</tbody>
 		</table>
 
 	</div>
@@ -49,6 +54,19 @@
 				$scope.role = $scope.user.authorities[0].authority.split("_")[1];
 			});
 
+			
+
+			$scope.saveJsonToFile = function(){
+				$http.post("/saveRegion", $scope.data).
+				then(function(response) {
+					console.log("---------success--------")
+				}, function(response) {
+					console.log("----------erros-------");
+					console.log(response);
+				});
+			}
+
+			
 			$scope.objectKeys = function(object){
 				if(object)
 					return Object.keys(object);

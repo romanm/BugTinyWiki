@@ -10,4 +10,5 @@ public class AppConfig {
 	//----------------files-------------------------------------------------------
 	final static String sahUsersJsonFileName = "sah_users.json";
 	final static String sahYearZwitJsonFileName = "sah_year_zwit.json";
+	final static String qaJsonFileName = "qa.json";
 }

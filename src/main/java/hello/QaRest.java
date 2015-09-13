@@ -21,17 +21,16 @@ public class QaRest {
 		return userPrincipal;
 	}
 	
-	String qaJsonFileName = "qa.json";
 	@RequestMapping(value = "/saveQa", method = RequestMethod.POST)
 	public  @ResponseBody Map<String, Object> saveQa(@RequestBody Map<String, Object> qaJsonJavaObject) {
-		System.out.println(27);
-		System.out.println(qaJsonFileName);
-		jsonToFileService.saveJsonToFile(qaJsonJavaObject,qaJsonFileName);
+		System.out.println(26);
+		System.out.println(AppConfig.qaJsonFileName);
+		jsonToFileService.saveJsonToFile(qaJsonJavaObject,AppConfig.qaJsonFileName);
 		return qaJsonJavaObject;
 	}
 	@RequestMapping(value = "/qa/read", method = RequestMethod.GET)
 	public  @ResponseBody Map<String, Object> readBugTinyWiki() {
-		Map<String, Object> readJsonFromFile = jsonToFileService.readJsonFromFile(qaJsonFileName);
+		Map<String, Object> readJsonFromFile = jsonToFileService.readJsonFromFile(AppConfig.qaJsonFileName);
 		return readJsonFromFile;
 	}
 	@RequestMapping(value = "/qa/randomQa", method = RequestMethod.POST)
